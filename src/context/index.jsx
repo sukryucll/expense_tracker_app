@@ -1,5 +1,4 @@
-import { useStatStyles } from "@chakra-ui/react";
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const GlobalContext = createContext(null);
 
@@ -15,13 +14,43 @@ export default function GlobalState({ children }) {
   const [totalIncome, setTotalIncome] = useState(0);
   const [allTransactions, setAllTransactions] = useState([]);
 
+  useEffect(() => {
+    const storedTransactions =
+      JSON.parse(localStorage.getItem("transactions")) || [];
+    setAllTransactions(storedTransactions);
+    const storedTotalExpense =
+      JSON.parse(localStorage.getItem("totalExpense")) || 0;
+    const storedTotalIncome =
+      JSON.parse(localStorage.getItem("totalIncome")) || 0;
+    setTotalExpense(storedTotalExpense);
+    setTotalIncome(storedTotalIncome);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(allTransactions));
+    localStorage.setItem("totalExpense", JSON.stringify(totalExpense));
+    localStorage.setItem("totalIncome", JSON.stringify(totalIncome));
+  }, [allTransactions, totalExpense, totalIncome]);
+
   function handleFormSubmit(currentFormData) {
     if (!currentFormData.description || !currentFormData.amount) return;
 
-    setAllTransactions([
+    const newTransactions = [
       ...allTransactions,
       { ...currentFormData, id: Date.now() },
-    ]);
+    ];
+
+    setAllTransactions(newTransactions);
+
+    const updatedTotalExpense = newTransactions
+      .filter((item) => item.type === "expense")
+      .reduce((total, item) => total + parseFloat(item.amount), 0);
+    const updatedTotalIncome = newTransactions
+      .filter((item) => item.type === "income")
+      .reduce((total, item) => total + parseFloat(item.amount), 0);
+
+    setTotalExpense(updatedTotalExpense);
+    setTotalIncome(updatedTotalIncome);
   }
 
   return (
