@@ -1,6 +1,6 @@
 import './App.css';
 import { Box, Container, Flex } from '@chakra-ui/react';
-import Main from './components/main';
+import Main from './components/main/Main';
 
 function App() {
   return (

@@ -1,6 +1,6 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
-import TransactionForm from "../add-transaction";
-import TransactionChartSummary from "../chart";
+import TransactionForm from "../add-transaction/TransactionForm";
+import TransactionChartSummary from "../chart/TransactionChartSummary";
 
 export default function Summary({
   onClose,

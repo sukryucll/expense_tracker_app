@@ -1,8 +1,8 @@
 import { Button, Flex, Heading, useDisclosure } from "@chakra-ui/react";
-import Summary from "../summary";
-import ExpenseView from "../expense-view";
+import Summary from "../summary/Summary";
+import ExpenseView from "../expense-view/ExpenseView";
 import { useContext, useEffect } from "react";
-import { GlobalContext } from "../../context";
+import { GlobalContext } from "../../context/GlobalState";
 
 export default function Main() {
   const { isOpen, onOpen, onClose } = useDisclosure();

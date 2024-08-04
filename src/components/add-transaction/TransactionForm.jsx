@@ -15,7 +15,7 @@ import {
   FormErrorMessage
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
-import { GlobalContext } from "../../context";
+import { GlobalContext } from "../../context/GlobalState";
 
 export default function TransactionForm({ onClose, isOpen }) {
   const { formData, setFormData, value, setValue, handleFormSubmit } =
